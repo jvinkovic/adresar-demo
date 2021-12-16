@@ -41,7 +41,7 @@ namespace Service
 
         public async Task<Contact> Update(Guid id, ContactDTO contact)
         {
-            var entity = await Get(contact.Id);
+            var entity = await Get(id);
 
             entity.Name = contact.Name;
             entity.Surname = contact.Surname;
@@ -49,7 +49,7 @@ namespace Service
 
             await _context.SaveChangesAsync();
 
-            return await Get(contact.Id);
+            return await Get(id);
         }
 
         public async Task Delete(Guid id)

@@ -10,7 +10,7 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=AdresarSQLite.db", options =>
+            optionsBuilder.UseSqlite("Filename=./AdresarSQLite.db", options =>
             {
                 options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
             });

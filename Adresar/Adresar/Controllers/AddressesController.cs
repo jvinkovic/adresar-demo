@@ -18,6 +18,12 @@ namespace Adresar.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult<List<Address>>> GetAll()
+        {
+            return Ok(await _service.GetAll());
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<Address>> Get(Guid id)
         {
