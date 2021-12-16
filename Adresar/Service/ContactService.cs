@@ -46,6 +46,7 @@ namespace Service
             entity.Name = contact.Name;
             entity.Surname = contact.Surname;
             entity.Mobile = contact.Mobile;
+            entity.AddressId = contact.AddressId;
 
             await _context.SaveChangesAsync();
 

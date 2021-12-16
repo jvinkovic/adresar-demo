@@ -21,6 +21,6 @@ namespace Data
         public Guid? AddressId { get; set; }
 
         [ForeignKey(nameof(AddressId))]
-        public Address? Address { get; set; }
+        public virtual Address? Address { get; set; }
     }
 }
