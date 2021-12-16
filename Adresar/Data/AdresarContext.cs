@@ -1,5 +1,4 @@
-﻿using Date;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Data
@@ -15,6 +14,7 @@ namespace Data
             {
                 options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
             });
+
             base.OnConfiguring(optionsBuilder);
         }
 

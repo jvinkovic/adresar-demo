@@ -1,5 +1,4 @@
 ﻿using Data;
-using Date;
 using Microsoft.EntityFrameworkCore;
 
 namespace Service
@@ -10,6 +9,7 @@ namespace Service
 
         public ContactService(AdresarContext context)
         {
+            context.Database.EnsureCreated();
             _context = context;
         }
 
@@ -20,18 +20,26 @@ namespace Service
 
         public async Task<Contact> Get(Guid id)
         {
-            return await _context.Contacts.SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.Contacts.Include(c => c.Address).SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Contact> Create(Contact contact)
+        public async Task<Contact> Create(ContactDTO contact)
         {
-            await _context.Contacts.AddAsync(contact);
+            var newContact = new Contact
+            {
+                Name = contact.Name,
+                Surname = contact.Surname,
+                Mobile = contact.Mobile,
+                AddressId = contact.AddressId
+            };
+
+            await _context.Contacts.AddAsync(newContact);
             await _context.SaveChangesAsync();
 
-            return await Get(contact.Id);
+            return await Get(newContact.Id);
         }
 
-        public async Task<Contact> Update(Guid id, Contact contact)
+        public async Task<Contact> Update(Guid id, ContactDTO contact)
         {
             var entity = await Get(contact.Id);
 

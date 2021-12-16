@@ -1,6 +1,6 @@
-using Date;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using Data;
 
 namespace Adresar.Controllers
 {
@@ -31,14 +31,14 @@ namespace Adresar.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Contact>> Create([FromBody] Contact contact)
+        public async Task<ActionResult<Contact>> Create([FromBody] ContactDTO contact)
         {
             return Ok(await _service.Create(contact));
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<Contact>> Update(Guid id, [FromBody] Contact contact)
+        public async Task<ActionResult<Contact>> Update(Guid id, [FromBody] ContactDTO contact)
         {
             return Ok(await _service.Update(id, contact));
         }

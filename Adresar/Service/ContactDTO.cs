@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data
+namespace Service
 {
-    public class Contact
+    public class ContactDTO
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [Required]
@@ -19,8 +16,5 @@ namespace Data
         public string Mobile { get; set; }
 
         public Guid? AddressId { get; set; }
-
-        [ForeignKey(nameof(AddressId))]
-        public Address? Address { get; set; }
     }
 }

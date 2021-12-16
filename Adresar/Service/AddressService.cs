@@ -1,5 +1,4 @@
 ﻿using Data;
-using Date;
 using Microsoft.EntityFrameworkCore;
 
 namespace Service
@@ -10,6 +9,7 @@ namespace Service
 
         public AddressService(AdresarContext context)
         {
+            context.Database.EnsureCreated();
             _context = context;
         }
 
@@ -23,17 +23,26 @@ namespace Service
             return await _context.Addresses.SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Address> Create(Address address)
+        public async Task<Address> Create(AddressDTO address)
         {
-            await _context.Addresses.AddAsync(address);
+            var newAddress = new Address
+            {
+                City = address.City,
+                PostalCode = address.PostalCode,
+                HouseNumber = address.HouseNumber,
+                Street = address.Street,
+                HouseNumberAddon = address.HouseNumberAddon
+            };
+
+            await _context.Addresses.AddAsync(newAddress);
             await _context.SaveChangesAsync();
 
-            return await Get(address.Id);
+            return await Get(newAddress.Id);
         }
 
-        public async Task<Address> Update(Guid id, Address address)
+        public async Task<Address> Update(Guid id, AddressDTO address)
         {
-            var entity = await Get(address.Id);
+            var entity = await Get(id);
 
             entity.City = address.City;
             entity.Street = address.Street;
@@ -43,7 +52,7 @@ namespace Service
 
             await _context.SaveChangesAsync();
 
-            return await Get(address.Id);
+            return await Get(id);
         }
 
         public async Task Delete(Guid id)
